@@ -5,6 +5,7 @@
       :tasks="tasks"
       @removeTask="removeTask"
       @completeTask="completeTask"
+      @clearCompleted="clearCompleted"
     ></to-do-list>
   </main>
 </template>
@@ -45,6 +46,10 @@ export default {
           ? { ...task, completed: !task.completed }
           : task;
       });
+    },
+
+    clearCompleted() {
+      this.tasks = this.tasks.filter((task) => !task.completed);
     },
   },
 };

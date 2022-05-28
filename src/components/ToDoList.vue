@@ -17,8 +17,8 @@
     </ul>
     <h5 v-else>No task added yet!</h5>
     <div class="list-footer">
-      <span>5 items left</span>
-      <button>clear completed</button>
+      <span>{{ activeTasks }}</span>
+      <button @click="$emit('clearCompleted')">clear completed</button>
     </div>
   </section>
 </template>
@@ -28,7 +28,16 @@ export default {
   props: {
     tasks: Array,
   },
-  emits: ["removeTask", "completeTask"],
+  emits: ["removeTask", "completeTask", "clearCompleted"],
+  computed: {
+    activeTasks() {
+      const activeTasksNum = this.tasks.filter(
+        (task) => !task.completed
+      ).length;
+
+      return `${activeTasksNum} item${activeTasksNum > 1 ? "s" : ""} left`;
+    },
+  },
 };
 </script>
 
