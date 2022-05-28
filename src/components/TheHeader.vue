@@ -1,5 +1,3 @@
-<script></script>
-
 <template>
   <header>
     <h1>Todo</h1>
@@ -9,6 +7,8 @@
     <input type="text" placeholder="Add Task..." />
   </form>
 </template>
+
+<script></script>
 
 <style scoped>
 header {
@@ -37,20 +37,11 @@ form::before {
   height: 20px;
   border-radius: 50%;
   margin-left: 20px;
-  border: 1px solid rgba(119, 122, 146, 0.5);
-  overflow: hidden;
-}
-
-form.dark {
-  background-color: var(--th-dark-el-bg);
+  border: 1px solid var(--gray-soft);
 }
 
 form.dark input {
   color: var(--th-dark-light-text);
-}
-
-form.light {
-  background-color: var(--th-light-el-bg);
 }
 
 form.light input {
@@ -63,5 +54,7 @@ form input {
   outline: none;
   border: none;
   background: transparent;
+  caret-color: var(--bright-blue);
+  font-family: inherit;
 }
 </style>

@@ -2,7 +2,7 @@
 
 :root {
   --bright-blue: #3a7bfd;
-  --check: linear-gradient(to right, #57ddff, #c058f3);
+  --gray-soft: rgba(119, 122, 146, 0.5);
 
   --th-light-bg: #e4e5f1;
   --th-light-dark-text: #484b6a;
@@ -33,4 +33,24 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.dark {
+  background-color: var(--th-dark-el-bg);
+  color: var(--th-dark-light-text);
+}
+
+.light {
+  background-color: var(--th-light-el-bg);
+  color: var(--th-light-dark-text);
+}
+
+button {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+button:hover {
+  cursor: pointer;
 }
