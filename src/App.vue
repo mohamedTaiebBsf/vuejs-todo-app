@@ -1,7 +1,11 @@
 <template>
   <main>
     <the-header @addTask="addTask" />
-    <to-do-list :tasks="tasks" @removeTask="removeTask"></to-do-list>
+    <to-do-list
+      :tasks="tasks"
+      @removeTask="removeTask"
+      @completeTask="completeTask"
+    ></to-do-list>
   </main>
 </template>
 
@@ -25,6 +29,7 @@ export default {
       const newTask = {
         id: uuidv4(),
         title: task,
+        completed: false,
       };
 
       this.tasks.push(newTask);
@@ -32,6 +37,14 @@ export default {
 
     removeTask(taskId) {
       this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    },
+
+    completeTask(taskId) {
+      this.tasks = this.tasks.map((task) => {
+        return task.id === taskId
+          ? { ...task, completed: !task.completed }
+          : task;
+      });
     },
   },
 };

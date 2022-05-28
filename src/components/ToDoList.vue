@@ -1,8 +1,12 @@
 <template>
   <section class="dark">
     <ul v-if="tasks.length > 0">
-      <li v-for="task in tasks" :key="task.id">
-        <div></div>
+      <li
+        v-for="task in tasks"
+        :key="task.id"
+        :class="task.completed ? 'complete' : ''"
+      >
+        <div @click="$emit('completeTask', task.id)"></div>
         {{ task.title }}
         <img
           src="../assets/img/icon-cross.svg"
@@ -24,7 +28,7 @@ export default {
   props: {
     tasks: Array,
   },
-  emits: ["removeTask"],
+  emits: ["removeTask", "completeTask"],
 };
 </script>
 
@@ -57,7 +61,12 @@ section ul li > div {
   border: 1px solid var(--gray-soft);
 }
 
-section ul li > div.complete {
+section ul li.complete {
+  text-decoration: line-through;
+  color: var(--gray-soft);
+}
+
+section ul li.complete > div {
   background: url("../assets/img/icon-check.svg") no-repeat center,
     linear-gradient(to right, #57ddff, #c058f3);
   border: none;
@@ -65,6 +74,10 @@ section ul li > div.complete {
 
 section ul li > div:hover {
   border: 1px solid var(--bright-blue);
+}
+
+section ul li.complete > div:hover {
+  border: none;
 }
 
 section ul li > img {
