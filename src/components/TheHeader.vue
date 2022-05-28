@@ -3,12 +3,27 @@
     <h1>Todo</h1>
     <div><img src="../assets/img/icon-sun.svg" alt="" /></div>
   </header>
-  <form class="dark">
-    <input type="text" placeholder="Add Task..." />
+  <form class="dark" @submit.prevent="submit">
+    <input type="text" placeholder="Add Task..." v-model="inputValue" />
   </form>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      inputValue: "",
+    };
+  },
+  methods: {
+    submit() {
+      this.$emit("addTask", this.inputValue);
+      this.inputValue = "";
+    },
+  },
+  emits: ["addTask"],
+};
+</script>
 
 <style scoped>
 header {

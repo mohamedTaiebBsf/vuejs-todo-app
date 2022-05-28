@@ -1,6 +1,6 @@
 <template>
   <main>
-    <the-header />
+    <the-header @addTask="addTask" />
     <to-do-list :tasks="tasks"></to-do-list>
   </main>
 </template>
@@ -8,20 +8,28 @@
 <script>
 import TheHeader from "./components/TheHeader.vue";
 import ToDoList from "./components/ToDoList.vue";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
-  data() {
-    return {
-      tasks: [
-        // { id: 1, title: "Vue.js" },
-        // { id: 2, title: "React.js" },
-        // { id: 3, title: "Angular.js" },
-      ],
-    };
-  },
   components: {
     TheHeader,
     ToDoList,
+  },
+  data() {
+    return {
+      tasks: [],
+    };
+  },
+  methods: {
+    addTask(task) {
+      const newTask = {
+        id: uuidv4(),
+        title: task,
+      };
+
+      this.tasks.push(newTask);
+      console.log(this.tasks);
+    },
   },
 };
 </script>
