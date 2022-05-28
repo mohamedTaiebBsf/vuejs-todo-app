@@ -4,7 +4,11 @@
       <li v-for="task in tasks" :key="task.id">
         <div></div>
         {{ task.title }}
-        <img src="../assets/img/icon-cross.svg" alt="delete" />
+        <img
+          src="../assets/img/icon-cross.svg"
+          alt="delete"
+          @click="$emit('removeTask', task.id)"
+        />
       </li>
     </ul>
     <h5 v-else>No task added yet!</h5>
@@ -20,6 +24,7 @@ export default {
   props: {
     tasks: Array,
   },
+  emits: ["removeTask"],
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <main>
     <the-header @addTask="addTask" />
-    <to-do-list :tasks="tasks"></to-do-list>
+    <to-do-list :tasks="tasks" @removeTask="removeTask"></to-do-list>
   </main>
 </template>
 
@@ -28,7 +28,10 @@ export default {
       };
 
       this.tasks.push(newTask);
-      console.log(this.tasks);
+    },
+
+    removeTask(taskId) {
+      this.tasks = this.tasks.filter((task) => task.id !== taskId);
     },
   },
 };
