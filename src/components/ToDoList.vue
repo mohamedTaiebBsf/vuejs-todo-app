@@ -1,5 +1,5 @@
 <template>
-  <section class="dark">
+  <section :class="theme">
     <template v-if="tasks.length > 0">
       <ul v-if="filteredTasks.length > 0">
         <li
@@ -25,6 +25,7 @@
       <span>{{ activeTasks }}</span>
       <filters
         :activeFilter="activeFilter"
+        :theme="theme"
         @setActiveFilter="$emit('setActiveFilter', $event)"
       />
       <button @click="$emit('clearCompleted')">clear completed</button>
@@ -42,6 +43,7 @@ export default {
   props: {
     tasks: Array,
     activeFilter: String,
+    theme: String,
   },
   emits: ["removeTask", "completeTask", "clearCompleted", "setActiveFilter"],
   computed: {

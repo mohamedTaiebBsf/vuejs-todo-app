@@ -1,9 +1,10 @@
 <template>
   <main>
-    <the-header @addTask="addTask" />
+    <the-header :theme="theme" @setTheme="setTheme" @addTask="addTask" />
     <to-do-list
       :tasks="tasks"
       :activeFilter="activeFilter"
+      :theme="theme"
       @removeTask="removeTask"
       @completeTask="completeTask"
       @clearCompleted="clearCompleted"
@@ -26,6 +27,7 @@ export default {
     return {
       tasks: [],
       activeFilter: "all",
+      theme: "dark",
     };
   },
   methods: {
@@ -60,6 +62,31 @@ export default {
     setActiveFilter(filter) {
       this.activeFilter = filter;
     },
+
+    setTheme() {
+      return this.theme === "dark"
+        ? (this.theme = "light")
+        : (this.theme = "dark");
+    },
+
+    addClassToApp(theme) {
+      if (theme === "dark") {
+        this.$el.parentNode.classList.add("dark");
+        this.$el.parentNode.classList.remove("light");
+      } else {
+        this.$el.parentNode.classList.add("light");
+        this.$el.parentNode.classList.remove("dark");
+      }
+    },
+  },
+
+  watch: {
+    theme(newTheme, oldTheme) {
+      this.addClassToApp(newTheme);
+    },
+  },
+  mounted() {
+    this.addClassToApp(this.theme);
   },
 };
 </script>
@@ -69,14 +96,24 @@ export default {
 
 #app {
   min-height: 100vh;
+}
+
+#app.dark {
   color: var(--th-dark-light-text);
   background: url("./assets/img/bg-desktop-dark.jpg") no-repeat,
     var(--th-dark-bg);
+}
+
+#app.light {
+  color: var(--th-light-dark-text);
+  background: url("./assets/img/bg-desktop-light.jpg") no-repeat,
+    var(--th-light-bg);
 }
 
 main {
   max-width: 540px;
   min-width: 325px;
   margin: auto;
+  padding-top: 78px;
 }
 </style>

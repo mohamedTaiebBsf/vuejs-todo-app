@@ -1,5 +1,5 @@
 <template>
-  <ul class="dark">
+  <ul :class="theme">
     <li
       v-for="filter in filters"
       :key="filter"
@@ -15,6 +15,7 @@
 export default {
   props: {
     activeFilter: String,
+    theme: String,
   },
   emits: ["setActiveFilter"],
   data() {

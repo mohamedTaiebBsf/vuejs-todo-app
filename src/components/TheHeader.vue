@@ -1,15 +1,22 @@
 <template>
   <header>
     <h1>Todo</h1>
-    <div><img src="../assets/img/icon-sun.svg" alt="" /></div>
+    <div @click="$emit('setTheme')">
+      <img v-if="theme === 'dark'" src="../assets/img/icon-sun.svg" alt="" />
+      <img v-if="theme === 'light'" src="../assets/img/icon-moon.svg" alt="" />
+    </div>
   </header>
-  <form class="dark" @submit.prevent="submit">
+  <form :class="theme" @submit.prevent="submit">
     <input type="text" placeholder="Add Task..." v-model.trim="inputValue" />
   </form>
 </template>
 
 <script>
 export default {
+  props: {
+    theme: String,
+  },
+  emits: ["addTask", "setTheme"],
   data() {
     return {
       inputValue: "",
@@ -21,7 +28,6 @@ export default {
       this.inputValue = "";
     },
   },
-  emits: ["addTask"],
 };
 </script>
 
@@ -36,6 +42,11 @@ header h1 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 15px;
+  color: var(--th-dark-light-text);
+}
+
+header > div {
+  cursor: pointer;
 }
 
 form {
