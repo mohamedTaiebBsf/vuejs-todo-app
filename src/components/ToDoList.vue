@@ -2,19 +2,15 @@
   <section :class="theme">
     <template v-if="tasks.length > 0">
       <ul v-if="filteredTasks.length > 0">
-        <li
+        <to-do-list-item
           v-for="task in filteredTasks"
           :key="task.id"
-          :class="task.completed ? 'complete' : ''"
-        >
-          <div @click="$emit('completeTask', task.id)"></div>
-          {{ task.title }}
-          <img
-            src="../assets/img/icon-cross.svg"
-            alt="delete"
-            @click="$emit('removeTask', task.id)"
-          />
-        </li>
+          :task="task"
+          :theme="theme"
+          @completeTask="$emit('completeTask', $event)"
+          @removeTask="$emit('removeTask', $event)"
+          @onDropHandler="dropHandler($event)"
+        ></to-do-list-item>
       </ul>
       <h5 v-else-if="filteredTasks.length === 0 && activeFilter !== 'all'">
         There is no {{ activeFilter }} tasks!
@@ -35,10 +31,12 @@
 
 <script>
 import Filters from "./Filters.vue";
+import ToDoListItem from "./ToDoListItem.vue";
 
 export default {
   components: {
     Filters,
+    ToDoListItem,
   },
   props: {
     tasks: Array,
@@ -46,6 +44,20 @@ export default {
     theme: String,
   },
   emits: ["removeTask", "completeTask", "clearCompleted", "setActiveFilter"],
+
+  methods: {
+    dropHandler(value) {
+      const fromIndex = this.tasks.findIndex(
+        (task) => task.id === value.fromId
+      );
+      const toIndex = this.tasks.findIndex((task) => task.id === value.taskId);
+
+      [this.tasks[fromIndex], this.tasks[toIndex]] = [
+        this.tasks[toIndex],
+        this.tasks[fromIndex],
+      ];
+    },
+  },
   computed: {
     activeTasks() {
       const activeTasksNum = this.tasks.filter(
@@ -75,45 +87,6 @@ export default {
 section {
   border-radius: 5px;
   margin-top: 25px;
-}
-
-section ul li {
-  padding: 20px;
-  border-bottom: 1px solid var(--gray-soft);
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-section ul li > div {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  margin-right: 20px;
-  border: 1px solid var(--gray-soft);
-}
-
-section ul li.complete {
-  text-decoration: line-through;
-  color: var(--gray-soft);
-}
-
-section ul li.complete > div {
-  background: url("../assets/img/icon-check.svg") no-repeat center,
-    linear-gradient(to right, #57ddff, #c058f3);
-  border: none;
-}
-
-section ul li > div:hover {
-  border: 1px solid var(--bright-blue);
-}
-
-section ul li.complete > div:hover {
-  border: none;
-}
-
-section ul li > img {
-  margin-left: auto;
 }
 
 section h5 {
