@@ -114,6 +114,28 @@ main {
   max-width: 540px;
   min-width: 325px;
   margin: auto;
-  padding-top: 78px;
+  padding-top: 100px;
+}
+
+@media (max-width: 580px) {
+  #app {
+    padding: 0 25px;
+  }
+}
+
+@media (max-width: 375px) {
+  #app.dark {
+    background: url("./assets/img/bg-mobile-dark.jpg") no-repeat,
+      var(--th-dark-bg);
+  }
+
+  #app.light {
+    background: url("./assets/img/bg-mobile-light.jpg") no-repeat,
+      var(--th-light-bg);
+  }
+
+  main {
+    padding-top: 40px;
+  }
 }
 </style>

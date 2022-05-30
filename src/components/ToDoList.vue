@@ -19,14 +19,23 @@
     <h5 v-else>No task added yet!</h5>
     <div class="list-footer">
       <span>{{ activeTasks }}</span>
-      <filters
-        :activeFilter="activeFilter"
-        :theme="theme"
-        @setActiveFilter="$emit('setActiveFilter', $event)"
-      />
+      <div class="desktop">
+        <filters
+          :activeFilter="activeFilter"
+          :theme="theme"
+          @setActiveFilter="$emit('setActiveFilter', $event)"
+        />
+      </div>
       <button @click="$emit('clearCompleted')">clear completed</button>
     </div>
   </section>
+  <div class="mobile-view" :class="theme">
+    <filters
+      :activeFilter="activeFilter"
+      :theme="theme"
+      @setActiveFilter="$emit('setActiveFilter', $event)"
+    />
+  </div>
 </template>
 
 <script>
@@ -87,6 +96,7 @@ export default {
 section {
   border-radius: 5px;
   margin-top: 25px;
+  overflow: hidden;
 }
 
 section h5 {
@@ -118,5 +128,28 @@ section.dark .list-footer button:hover {
 
 section.light .list-footer button:hover {
   color: var(--th-light-dark-text);
+}
+
+.mobile-view {
+  display: none;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 18px;
+}
+
+@media (max-width: 500px) {
+  .mobile-view {
+    display: block;
+  }
+
+  .desktop {
+    display: none;
+  }
+}
+
+@media (max-width: 375px) {
+  section {
+    margin-top: 18px;
+  }
 }
 </style>

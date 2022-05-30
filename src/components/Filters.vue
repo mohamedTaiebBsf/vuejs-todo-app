@@ -29,6 +29,7 @@ export default {
 <style scoped>
 ul {
   display: flex;
+  justify-content: center;
   align-items: center;
   font-size: 16px;
   color: var(--gray-soft);
@@ -55,5 +56,11 @@ ul.dark li:hover {
 
 ul.light li:hover {
   color: var(--th-light-dark-text);
+}
+
+@media (max-width: 500px) {
+  ul li {
+    margin-right: 25px;
+  }
 }
 </style>

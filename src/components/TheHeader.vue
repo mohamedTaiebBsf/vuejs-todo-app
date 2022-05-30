@@ -83,4 +83,10 @@ form input {
   caret-color: var(--bright-blue);
   font-family: inherit;
 }
+
+@media (max-width: 375px) {
+  form {
+    margin-top: 25px;
+  }
+}
 </style>
