@@ -3,9 +3,11 @@
     <the-header @addTask="addTask" />
     <to-do-list
       :tasks="tasks"
+      :activeFilter="activeFilter"
       @removeTask="removeTask"
       @completeTask="completeTask"
       @clearCompleted="clearCompleted"
+      @setActiveFilter="setActiveFilter"
     ></to-do-list>
   </main>
 </template>
@@ -23,10 +25,13 @@ export default {
   data() {
     return {
       tasks: [],
+      activeFilter: "all",
     };
   },
   methods: {
     addTask(task) {
+      if (!task) return;
+
       const newTask = {
         id: uuidv4(),
         title: task,
@@ -50,6 +55,10 @@ export default {
 
     clearCompleted() {
       this.tasks = this.tasks.filter((task) => !task.completed);
+    },
+
+    setActiveFilter(filter) {
+      this.activeFilter = filter;
     },
   },
 };

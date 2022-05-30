@@ -54,3 +54,7 @@ button {
 button:hover {
   cursor: pointer;
 }
+
+section ul {
+  list-style: none;
+}

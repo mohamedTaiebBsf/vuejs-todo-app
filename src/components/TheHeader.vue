@@ -4,7 +4,7 @@
     <div><img src="../assets/img/icon-sun.svg" alt="" /></div>
   </header>
   <form class="dark" @submit.prevent="submit">
-    <input type="text" placeholder="Add Task..." v-model="inputValue" />
+    <input type="text" placeholder="Add Task..." v-model.trim="inputValue" />
   </form>
 </template>
 
