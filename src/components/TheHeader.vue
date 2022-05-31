@@ -1,7 +1,7 @@
 <template>
   <header>
     <h1>Todo</h1>
-    <div @click="$emit('setTheme')">
+    <div @click="setTheme">
       <img v-if="theme === 'dark'" src="../assets/img/icon-sun.svg" alt="" />
       <img v-if="theme === 'light'" src="../assets/img/icon-moon.svg" alt="" />
     </div>
@@ -12,19 +12,23 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
-  props: {
-    theme: String,
-  },
-  emits: ["addTask", "setTheme"],
   data() {
     return {
       inputValue: "",
     };
   },
+
+  computed: {
+    ...mapGetters(["theme"]),
+  },
+
   methods: {
+    ...mapMutations(["setTheme"]),
     submit() {
-      this.$emit("addTask", this.inputValue);
+      this.$store.commit("addTask", this.inputValue);
       this.inputValue = "";
     },
   },

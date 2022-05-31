@@ -2,46 +2,44 @@
   <li
     :class="[theme, { complete: task.completed, draggable: isDragEnter }]"
     draggable="true"
-    @dragstart="onDragStart($event, task.id)"
+    @dragstart="onDragStart({ event: $event, taskId: task.id })"
     @dragenter="isDragEnter = true"
     @dragover.prevent
     @dragleave.prevent="isDragEnter = false"
-    @drop="onDrop($event, task.id)"
+    @drop="dropHandler($event, task.id)"
   >
-    <div @click="$emit('completeTask', task.id)"></div>
+    <div @click="completeTask(task.id)"></div>
     {{ task.title }}
     <img
       src="../assets/img/icon-cross.svg"
       alt="delete"
-      @click="$emit('removeTask', task.id)"
+      @click="removeTask(task.id)"
     />
   </li>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
   props: {
     task: Object,
-    theme: String,
   },
-  emits: ["removeTask", "completeTask", "onDropHandler"],
+
   data() {
     return {
       isDragEnter: false,
     };
   },
+
+  computed: {
+    ...mapGetters(["theme"]),
+  },
+
   methods: {
-    onDragStart(event, taskId) {
-      event.dataTransfer.setData("fromId", taskId);
-      event.dataTransfer.effectAllowed = "copy";
-    },
-
-    onDrop(event, taskId) {
-      const fromId = event.dataTransfer.getData("fromId");
-
-      if (fromId !== taskId) {
-        this.$emit("onDropHandler", { fromId, taskId });
-      }
+    ...mapMutations(["removeTask", "completeTask", "onDragStart"]),
+    dropHandler(event, taskId) {
+      this.$store.commit("onDrop", { event, taskId });
       this.isDragEnter = false;
     },
   },

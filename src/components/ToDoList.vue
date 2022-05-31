@@ -11,10 +11,6 @@
             v-for="task in filteredTasks"
             :key="task.id"
             :task="task"
-            :theme="theme"
-            @completeTask="$emit('completeTask', $event)"
-            @removeTask="$emit('removeTask', $event)"
-            @onDropHandler="dropHandler($event)"
           ></to-do-list-item>
         </transition-group>
         <h5 v-else-if="filteredTasks.length === 0 && activeFilter !== 'all'">
@@ -26,54 +22,29 @@
     <div class="list-footer">
       <span>{{ activeTasks }}</span>
       <div class="desktop">
-        <filters
-          :activeFilter="activeFilter"
-          :theme="theme"
-          @setActiveFilter="$emit('setActiveFilter', $event)"
-        />
+        <filters />
       </div>
-      <button @click="$emit('clearCompleted')">clear completed</button>
+      <button @click="clearCompleted">clear completed</button>
     </div>
   </section>
   <div class="mobile-view" :class="theme">
-    <filters
-      :activeFilter="activeFilter"
-      :theme="theme"
-      @setActiveFilter="$emit('setActiveFilter', $event)"
-    />
+    <filters />
   </div>
 </template>
 
 <script>
 import Filters from "./Filters.vue";
 import ToDoListItem from "./ToDoListItem.vue";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   components: {
     Filters,
     ToDoListItem,
   },
-  props: {
-    tasks: Array,
-    activeFilter: String,
-    theme: String,
-  },
-  emits: ["removeTask", "completeTask", "clearCompleted", "setActiveFilter"],
 
-  methods: {
-    dropHandler(value) {
-      const fromIndex = this.tasks.findIndex(
-        (task) => task.id === value.fromId
-      );
-      const toIndex = this.tasks.findIndex((task) => task.id === value.taskId);
-
-      [this.tasks[fromIndex], this.tasks[toIndex]] = [
-        this.tasks[toIndex],
-        this.tasks[fromIndex],
-      ];
-    },
-  },
   computed: {
+    ...mapGetters(["tasks", "activeFilter", "theme", "filteredTasks"]),
     activeTasks() {
       const activeTasksNum = this.tasks.filter(
         (task) => !task.completed
@@ -81,19 +52,10 @@ export default {
 
       return `${activeTasksNum} item${activeTasksNum > 1 ? "s" : ""} left`;
     },
+  },
 
-    filteredTasks() {
-      switch (this.activeFilter) {
-        case "all":
-          return this.tasks;
-        case "active":
-          return this.tasks.filter((task) => !task.completed);
-        case "completed":
-          return this.tasks.filter((task) => task.completed);
-        default:
-          return this.tasks;
-      }
-    },
+  methods: {
+    ...mapMutations(["clearCompleted", "setActiveFilter"]),
   },
 };
 </script>
@@ -109,6 +71,30 @@ section h5 {
   padding: 20px;
   text-align: center;
   border-bottom: 1px solid var(--gray-soft);
+}
+
+section ul {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+section ul .fade-enter-active,
+section ul .fade-leave-from {
+  overflow-y: hidden;
+}
+
+section ul::-webkit-scrollbar {
+  width: 5px;
+}
+
+section ul::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #808080;
+  border-radius: 5px;
+}
+
+section ul::-webkit-scrollbar-thumb {
+  background: #6a6ac6;
+  border-radius: 10px;
 }
 
 section .list-footer {

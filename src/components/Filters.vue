@@ -4,7 +4,7 @@
       v-for="filter in filters"
       :key="filter"
       :class="filter === activeFilter ? 'active' : ''"
-      @click="$emit('setActiveFilter', filter)"
+      @click="setActiveFilter(filter)"
     >
       {{ filter }}
     </li>
@@ -12,16 +12,19 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
-  props: {
-    activeFilter: String,
-    theme: String,
-  },
-  emits: ["setActiveFilter"],
   data() {
     return {
       filters: ["all", "active", "completed"],
     };
+  },
+  computed: {
+    ...mapGetters(["activeFilter", "theme"]),
+  },
+  methods: {
+    ...mapMutations(["setActiveFilter"]),
   },
 };
 </script>
