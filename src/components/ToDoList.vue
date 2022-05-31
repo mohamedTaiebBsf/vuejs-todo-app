@@ -1,22 +1,28 @@
 <template>
   <section :class="theme">
-    <template v-if="tasks.length > 0">
-      <ul v-if="filteredTasks.length > 0">
-        <to-do-list-item
-          v-for="task in filteredTasks"
-          :key="task.id"
-          :task="task"
-          :theme="theme"
-          @completeTask="$emit('completeTask', $event)"
-          @removeTask="$emit('removeTask', $event)"
-          @onDropHandler="dropHandler($event)"
-        ></to-do-list-item>
-      </ul>
-      <h5 v-else-if="filteredTasks.length === 0 && activeFilter !== 'all'">
-        There is no {{ activeFilter }} tasks!
-      </h5>
-    </template>
-    <h5 v-else>No task added yet!</h5>
+    <transition name="fade" mode="out-in">
+      <template v-if="tasks.length > 0">
+        <transition-group
+          tag="ul"
+          name="task-slide"
+          v-if="filteredTasks.length > 0"
+        >
+          <to-do-list-item
+            v-for="task in filteredTasks"
+            :key="task.id"
+            :task="task"
+            :theme="theme"
+            @completeTask="$emit('completeTask', $event)"
+            @removeTask="$emit('removeTask', $event)"
+            @onDropHandler="dropHandler($event)"
+          ></to-do-list-item>
+        </transition-group>
+        <h5 v-else-if="filteredTasks.length === 0 && activeFilter !== 'all'">
+          There is no {{ activeFilter }} tasks!
+        </h5>
+      </template>
+      <h5 v-else>No task added yet!</h5>
+    </transition>
     <div class="list-footer">
       <span>{{ activeTasks }}</span>
       <div class="desktop">
@@ -135,6 +141,71 @@ section.light .list-footer button:hover {
   padding: 20px;
   border-radius: 5px;
   margin-top: 18px;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-enter-active {
+  transition: all 1s ease-out;
+}
+
+.fade-enter-to {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-leave-active {
+  transition: all 1s ease-out;
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.task-slide-enter-active {
+  animation: slide-in 0.3s ease-out;
+}
+
+.task-slide-leave-active {
+  animation: slide-out 0.3s ease-out;
+  position: absolute;
+}
+
+.task-slide-move {
+  transition: all 0.3s;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
 }
 
 @media (max-width: 500px) {
