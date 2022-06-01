@@ -2,6 +2,10 @@
 
 > Todo App built with `Vue.js`.
 
+## Demo 🚀
+
+You can visualize the demo [here](https://vue-todoapp-vuex.netlify.app/).
+
 ## Tech
 
 - [Vue.js](https://vuejs.org/)
