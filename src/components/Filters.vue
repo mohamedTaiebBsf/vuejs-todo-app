@@ -13,6 +13,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import * as types from "../store/types";
 
 export default {
   data() {
@@ -21,10 +22,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["activeFilter", "theme"]),
+    ...mapGetters({
+      activeFilter: types.ACTIVE_FILTER,
+      theme: types.THEME,
+    }),
   },
   methods: {
-    ...mapMutations(["setActiveFilter"]),
+    ...mapMutations({
+      setActiveFilter: types.SET_ACTIVE_FILTER,
+    }),
   },
 };
 </script>

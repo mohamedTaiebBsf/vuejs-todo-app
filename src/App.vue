@@ -9,6 +9,7 @@
 import TheHeader from "./components/TheHeader.vue";
 import ToDoList from "./components/ToDoList.vue";
 import { mapGetters } from "vuex";
+import * as types from "./store/types";
 
 export default {
   components: {
@@ -17,7 +18,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["theme"]),
+    ...mapGetters({
+      theme: types.THEME,
+    }),
   },
 
   methods: {

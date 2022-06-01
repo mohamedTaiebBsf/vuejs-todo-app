@@ -36,6 +36,7 @@
 import Filters from "./Filters.vue";
 import ToDoListItem from "./ToDoListItem.vue";
 import { mapGetters, mapMutations } from "vuex";
+import * as types from "../store/types";
 
 export default {
   components: {
@@ -44,7 +45,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["tasks", "activeFilter", "theme", "filteredTasks"]),
+    ...mapGetters({
+      tasks: types.TASKS,
+      activeFilter: types.ACTIVE_FILTER,
+      theme: types.THEME,
+      filteredTasks: types.FILTERED_TASKS,
+    }),
     activeTasks() {
       const activeTasksNum = this.tasks.filter(
         (task) => !task.completed
@@ -55,7 +61,10 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["clearCompleted", "setActiveFilter"]),
+    ...mapMutations({
+      clearCompleted: types.CLEAR_COMPLETED_TASKS,
+      setActiveFilter: types.SET_ACTIVE_FILTER,
+    }),
   },
 };
 </script>

@@ -20,6 +20,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import * as types from "../store/types";
 
 export default {
   props: {
@@ -33,13 +34,19 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["theme"]),
+    ...mapGetters({
+      theme: types.THEME,
+    }),
   },
 
   methods: {
-    ...mapMutations(["removeTask", "completeTask", "onDragStart"]),
+    ...mapMutations({
+      removeTask: types.REMOVE_TASK,
+      completeTask: types.COMPLETE_TASK,
+      onDragStart: types.DRAG_START_TASK,
+    }),
     dropHandler(event, taskId) {
-      this.$store.commit("onDrop", { event, taskId });
+      this.$store.commit(types.DROP_TASK, { event, taskId });
       this.isDragEnter = false;
     },
   },

@@ -13,6 +13,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import * as types from "../store/types";
 
 export default {
   data() {
@@ -22,13 +23,15 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["theme"]),
+    ...mapGetters({ theme: types.THEME }),
   },
 
   methods: {
-    ...mapMutations(["setTheme"]),
+    ...mapMutations({
+      setTheme: types.SET_THEME,
+    }),
     submit() {
-      this.$store.commit("addTask", this.inputValue);
+      this.$store.commit(types.ADD_TASK, this.inputValue);
       this.inputValue = "";
     },
   },
