@@ -74,6 +74,7 @@ section {
   border-radius: 5px;
   margin-top: 25px;
   overflow: hidden;
+  margin-bottom: 50px;
 }
 
 section h5 {
@@ -88,7 +89,7 @@ section ul {
 }
 
 section ul .fade-enter-active,
-section ul .fade-leave-from {
+section ul .fade-leave-active {
   overflow-y: hidden;
 }
 
@@ -136,6 +137,7 @@ section.light .list-footer button:hover {
   padding: 20px;
   border-radius: 5px;
   margin-top: 18px;
+  margin-bottom: 50px;
 }
 
 .fade-enter-from {
@@ -210,6 +212,10 @@ section.light .list-footer button:hover {
 
   .desktop {
     display: none;
+  }
+
+  section {
+    margin-bottom: 0;
   }
 }
 

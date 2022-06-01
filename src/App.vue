@@ -3,6 +3,7 @@
     <the-header />
     <to-do-list></to-do-list>
   </main>
+  <p>Drag & Drop to reorder list</p>
 </template>
 
 <script>
@@ -51,6 +52,8 @@ export default {
 
 #app {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 #app.dark {
@@ -66,10 +69,17 @@ export default {
 }
 
 main {
+  width: 100%;
   max-width: 540px;
   min-width: 325px;
-  margin: auto;
+  margin: 0 auto;
   padding-top: 100px;
+}
+
+#app p {
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: 50px;
 }
 
 @media (max-width: 580px) {
